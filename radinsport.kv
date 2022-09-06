@@ -1,0 +1,79 @@
+#:import arabic_reshaper arabic_reshaper
+#:import get_display bidi.algorithm.get_display
+#:import gch kivy.utils.get_color_from_hex
+#:import webbrowser webbrowser
+
+
+<MyLayout>:
+
+    BoxLayout:
+        orientation: 'vertical'
+        size: root.width, root.height
+        canvas:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'bc.jpg'
+        spacing: "2dp"
+
+        FloatLayout:
+            canvas:
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+                    source: 'images.jpg'
+            size_hint: 1, 0.12
+            pos_hint: {"top": 1}
+            
+            Image:
+                source: '3line.png'
+                size_hint: None, None
+                width: dp(23)
+                pos_hint: { "center_y": .5}
+                pos: (dp(15), 0)
+                #padding: "3dp", "0dp"
+        
+            Label:
+                text: "Radin Sport"
+                font_size: dp(28)
+                size_hint: None, None
+                pos_hint: { "center_y": .5}
+                pos: (dp(110), 0)
+                #padding: "3dp", "0dp"
+
+        ScrollViewTab:
+            GridLayout:
+                id: tab
+                rows: 1
+                size_hint_x: None
+                width: self.minimum_width
+                spacing: "2dp"
+
+
+
+        ScrollViewMain:
+            id: scrollview
+            BoxLayout:
+                orientation: 'vertical'
+                id: main
+                markup: True
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: "2dp"
+            
+
+<ScrollViewTab@ScrollView>:
+    do_scroll_x: True
+    do_scroll_y: False
+    size_hint_y: 0.05
+    
+<ScrollViewMain@ScrollView>:
+    do_scroll_x: False
+    do_scroll_y: True
+    size_hint_y: 0.85
+
+
+
+
+
+    
