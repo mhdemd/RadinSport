@@ -1,0 +1,310 @@
+#:import SwapTransition kivy.uix.screenmanager.SwapTransition
+#:import Window kivy.core.window.Window
+#:import IconLeftWidget kivymd.uix.list.IconLeftWidget
+#:import get_display bidi.algorithm.get_display
+#:import arabic_reshaper arabic_reshaper
+#:import gch kivy.utils.get_color_from_hex
+
+[AccordionItemTitle1@Label]:
+    text: ""#get_display(arabic_reshaper.reshape("نمایش گروه های کالایی"))
+    font_name: "DroidNaskh-Regular.ttf"
+    size_hint: (1, None)
+    height: "0dp"
+    pos_hint: {"top" : 1}
+    #size: (self.width, 1)
+    canvas.before:
+        Color:
+            rgb: 26/255, 35/255, 126/255
+        Rectangle:
+            pos: self.pos
+            size: self.size
+        PushMatrix
+        Translate:
+            xy: self.center_x, self.center_y
+        Rotate:
+            angle: 90 if ctx.item.orientation == 'horizontal' else 0
+            axis: 0, 0, 1
+        Translate:
+            xy: -self.center_x, -self.center_y
+    canvas.after:
+        PopMatrix
+
+[AccordionItemTitle2@Label]:
+    text: ""#get_display(arabic_reshaper.reshape("نمایش گروه های کالایی"))
+    font_name: "DroidNaskh-Regular.ttf"
+    size_hint: (1, None)
+    height: "0dp"
+    pos_hint: {"top" : 1}
+    #size: (self.width, 1)
+    canvas.before:
+        Color:
+            rgb: 26/255, 35/255, 126/255
+        Rectangle:
+            pos: self.pos
+            size: self.size
+        PushMatrix
+        Translate:
+            xy: self.center_x, self.center_y
+        Rotate:
+            angle: 90 if ctx.item.orientation == 'horizontal' else 0
+            axis: 0, 0, 1
+        Translate:
+            xy: -self.center_x, -self.center_y
+    canvas.after:
+        PopMatrix
+
+<ExampleBackdrop>:
+    mgr1: img
+    mgr2: acc_back
+    mdBackdrop: mdBackdrop
+
+    BoxLayout:
+        orientation: 'vertical'
+        size: root.width, root.height
+
+        MDToolbar:
+            #size_hint_y: .15  
+            title: 'Radin Sport'
+            md_bg_color: gch('#1A237E')
+            #height:80
+            #elevation: 10
+            left_action_items: [["menu", lambda x: app.root.collapse()]]
+            right_action_items: [["dots-vertical", lambda x: x]]
+
+        Accordion:
+
+            min_space: "0dp"
+            anim_func: "out_back"
+
+            id:  mdBackdrop
+            orientation: 'vertical'
+            anim_duration: 1
+
+            AccordionItem:
+                id: acc_back
+                #collapse: False
+                title_template: "AccordionItemTitle1"
+                MyBackdropBackLayer:
+
+            AccordionItem:
+                title_template: "AccordionItemTitle2"
+                MyBackdropFrontLayer:
+                    id: img
+
+<MyBackdropFrontLayer>:
+    transition: SwapTransition()
+    id: sc_mng
+    main: main
+    main2: main2
+    main3: main3
+    sc: sc
+
+    MDScreen:
+        name: "one screen"
+        BoxLayout:
+            orientation: "vertical"
+
+            Image:
+                source: "cat.jpg"
+
+            MDFillRoundFlatButton:
+                pos_hint: {"center_x": .5, "top": 1}
+                text: get_display(arabic_reshaper.reshape("نمایش گروه های کالایی"))
+                font_name: "DroidNaskh-Regular.ttf"
+                #on_release: app.root.mdBackdrop.open(-Window.height / 2.8)
+                on_release: app.root.collapse()
+
+            Label:
+                size_hint_y: .1
+    MDScreen:
+        name: "two screen"
+
+        ScrollView:
+            size_hint_y: 0.94
+            always_overscroll: False
+            
+            scroll_timeout: 2500
+            scroll_distance: 2
+
+            #do_scroll_x: False
+            do_scroll_y: True
+            id: sc
+           
+            
+            #always_overscroll: False
+            effect_cls: "ScrollEffect"
+            #scroll_distance: "2000sp"
+            #scroll_timeout: 255
+            #smooth_scroll_end: 0
+
+            BoxLayout:
+                
+                orientation: 'horizontal'
+                size_hint_y: None
+                height: self.minimum_height
+                #spacing: "2dp"
+                BoxLayout:
+                    
+                    orientation: 'vertical'
+                    id: main
+                    markup: True
+                    size_hint_y: None
+                    height: self.minimum_height
+                    #spacing: "2dp"
+                BoxLayout:
+                    
+                    orientation: 'vertical'
+                    id: main2
+                    markup: True
+                    size_hint_y: None
+                    height: self.minimum_height
+                    #spacing: "2dp"
+                BoxLayout:
+                    
+                    orientation: 'vertical'
+                    id: main3
+                    markup: True
+                    size_hint_y: None
+                    height: self.minimum_height
+                    #spacing: "2dp"
+
+
+
+
+#            GridLayout:
+#                id: main
+#                cols: 3
+#                size_hint_y: None
+#                height: self.minimum_height
+#                spacing: "2dp"
+
+    MDScreen:
+        name: "three screen"
+
+        BoxLayout:
+            orientation: "vertical"
+            spacing: "3dp"
+            Label:
+                size_hint_y: .25
+            Image: 
+                pos_hint: {"center_x": .5, "top": 0.75}
+                source: "01.jpg"
+            
+            Label:
+                size_hint_y: .05
+
+            MDRoundFlatIconButton:
+                pos_hint: {"center_x": .5, "top": 1}
+                icon: "cart-plus"
+                text: "Digikala_Panel"
+                on_release: app.root.callback(self, "")
+
+            MDRoundFlatIconButton:
+                pos_hint: {"center_x": .5, "top": 1}
+                icon: "instagram"
+                text: "Instagram"
+                on_release: app.root.callback(self, "")
+
+            MDRoundFlatIconButton:
+                pos_hint: {"center_x": .5, "top": 1}
+                icon: "web"
+                text: "Weblog"
+                on_release: app.root.callback(self, "")
+            
+            Label:
+                size_hint_y: .1
+
+
+
+<MyBackdropBackLayer>:
+    
+    BoxLayout:
+
+        orientation:'vertical'
+
+        pos_hint: {"center_x" : 0.5}#, "top" : .8 }
+        spacing: "5dp"
+        #padding: "5dp"
+        Label:
+            size_hint_y: 0.08
+        MDFillRoundFlatButton:
+            #size_hint: (.5, .19)
+            pos_hint: {"center_x": .5}
+            text: get_display(arabic_reshaper.reshape("حوله و مایو"))
+            font_name: "DroidNaskh-Regular.ttf"
+            background_color: app.theme_cls.primary_color
+            on_press: app.root.show_popup()
+            on_release:
+                app.root.callback(self, "")
+                #app.root.mdBackdrop.open()
+                #app.root.mdBackdrop.close()
+
+        MDFillRoundFlatButton:
+            #size_hint: (1, .19)
+            pos_hint: {"center_x": .5}
+            text: get_display(arabic_reshaper.reshape("کلاه و نقاب"))
+            font_name: "DroidNaskh-Regular.ttf"
+            background_color: app.theme_cls.primary_color
+            on_press: app.root.show_popup()
+            on_release: 
+                app.root.callback(self, "")
+                #app.root.mdBackdrop.open()
+                #app.root.mdBackdrop.close()
+                
+
+        MDFillRoundFlatButton:
+            #size_hint: (1, .19)
+            pos_hint: {"center_x": .5}
+            text: get_display(arabic_reshaper.reshape("قمقمه و شیکر"))
+            font_name: "DroidNaskh-Regular.ttf"
+            background_color: app.theme_cls.primary_color
+            on_press: app.root.show_popup()
+            on_release: 
+                app.root.callback(self, "")
+                #app.root.mdBackdrop.open()
+                #app.root.mdBackdrop.close()
+
+        MDFillRoundFlatButton:
+            #size_hint: (1, .19)
+            pos_hint: {"center_x": .5}
+            text: get_display(arabic_reshaper.reshape("دستکش ها و لوازم بدنسازی"))
+            font_name: "DroidNaskh-Regular.ttf"
+            background_color: app.theme_cls.primary_color
+            on_press: app.root.show_popup()
+            on_release: 
+                app.root.callback(self, "")
+                #app.root.mdBackdrop.open()
+                #app.root.mdBackdrop.close()
+
+        Image: 
+            pos_hint: {"center_x": .5} 
+            size_hint: (None, None)
+            size: ("250dp", "250dp")
+            source: "022.png"
+
+        MDFillRoundFlatButton:
+            text: get_display(arabic_reshaper.reshape("ارتباط با ما"))
+            font_name: "DroidNaskh-Regular.ttf"
+            background_color: app.theme_cls.primary_color
+            pos_hint: {"center_x": .5}
+            on_release: 
+                #app.root.mdBackdrop.open()
+                #app.root.mdBackdrop.close()
+                app.root.mgr1.current= "three screen"
+                app.root.collapse()
+
+        Label: 
+            size_hint_y: 0.08
+<PopupBox>:
+    pop_up_text: _pop_up_text
+    size_hint: .55, .15
+    auto_dismiss: True
+    title: ""
+    
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            id: _pop_up_text
+            text: '' 
+            font_name: "DroidNaskh-Regular.ttf"
+
