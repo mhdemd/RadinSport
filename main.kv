@@ -7,60 +7,29 @@
 
 [AccordionItemTitle1@Label]:
     text: ""#get_display(arabic_reshaper.reshape("نمایش گروه های کالایی"))
-    font_name: "DroidNaskh-Regular.ttf"
     size_hint: (1, None)
     height: "0dp"
     pos_hint: {"top" : 1}
-    #size: (self.width, 1)
-    canvas.before:
-        Color:
-            rgb: 26/255, 35/255, 126/255
-        Rectangle:
-            pos: self.pos
-            size: self.size
-        PushMatrix
-        Translate:
-            xy: self.center_x, self.center_y
-        Rotate:
-            angle: 90 if ctx.item.orientation == 'horizontal' else 0
-            axis: 0, 0, 1
-        Translate:
-            xy: -self.center_x, -self.center_y
-    canvas.after:
-        PopMatrix
+
 
 [AccordionItemTitle2@Label]:
     text: ""#get_display(arabic_reshaper.reshape("نمایش گروه های کالایی"))
-    font_name: "DroidNaskh-Regular.ttf"
     size_hint: (1, None)
     height: "0dp"
     pos_hint: {"top" : 1}
-    #size: (self.width, 1)
-    canvas.before:
-        Color:
-            rgb: 26/255, 35/255, 126/255
-        Rectangle:
-            pos: self.pos
-            size: self.size
-        PushMatrix
-        Translate:
-            xy: self.center_x, self.center_y
-        Rotate:
-            angle: 90 if ctx.item.orientation == 'horizontal' else 0
-            axis: 0, 0, 1
-        Translate:
-            xy: -self.center_x, -self.center_y
-    canvas.after:
-        PopMatrix
+
 
 <ExampleBackdrop>:
     mgr1: img
     mgr2: acc_back
     mdBackdrop: mdBackdrop
-
+    #FloatLayout:
+    #    size: root.width, root.height
+    #    pos: (0, 0)
     BoxLayout:
         orientation: 'vertical'
         size: root.width, root.height
+        pos_hint: {"x": 0, "y": 0}
 
         MDToolbar:
             #size_hint_y: .15  
@@ -69,28 +38,33 @@
             #height:80
             #elevation: 10
             left_action_items: [["menu", lambda x: app.root.collapse()]]
-            right_action_items: [["dots-vertical", lambda x: x]]
+            #right_action_items: [["dots-vertical", lambda x: x]]
 
         Accordion:
-
-            min_space: "0dp"
-            anim_func: "out_back"
-
             id:  mdBackdrop
-            orientation: 'vertical'
-            anim_duration: 1
-
+            orientation: 'horizontal'
+            min_space: "0dp"
+            anim_func: "in_out_quad"
+            anim_duration: .8
+            
             AccordionItem:
+                min_space: "0dp"
                 id: acc_back
                 #collapse: False
                 title_template: "AccordionItemTitle1"
+                
                 MyBackdropBackLayer:
 
             AccordionItem:
+                min_space: "0dp"
                 title_template: "AccordionItemTitle2"
                 MyBackdropFrontLayer:
                     id: img
-
+    MDFloatingActionButton:
+        pos: (root.width - self.width - 5 , "200dp")
+        icon: "menu"
+        type: "large"
+        on_release: app.root.collapse()
 <MyBackdropFrontLayer>:
     transition: SwapTransition()
     id: sc_mng
@@ -98,213 +72,440 @@
     main2: main2
     main3: main3
     sc: sc
-
+    title_dt: title_dt
+    image_dt: image_dt
+    price1_dt: price1_dt
+    price2_dt: price2_dt
+    return_dt: return_dt
+    off_dt: off_dt
+    sc_dt: sc_dt
+    
     MDScreen:
         name: "one screen"
         BoxLayout:
-            orientation: "vertical"
+            canvas.before:
+                Color:
+                    rgb: gch('#1A237E')
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            BoxLayout:
+                size_hint_x: .99
+                canvas.before:
+                    Color:
+                        rgb: 1, 1, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [(50, 50), (0, 0), (0, 0), (0, 0)]
 
-            Image:
-                source: "cat.jpg"
+                BoxLayout:
+                    orientation: "vertical"
+                    Image:
+                        source: "cat.jpg"
 
-            MDFillRoundFlatButton:
-                pos_hint: {"center_x": .5, "top": 1}
-                text: get_display(arabic_reshaper.reshape("نمایش گروه های کالایی"))
-                font_name: "DroidNaskh-Regular.ttf"
-                #on_release: app.root.mdBackdrop.open(-Window.height / 2.8)
-                on_release: app.root.collapse()
+                    MDFillRoundFlatButton:
+                        pos_hint: {"center_x": .5, "top": 1}
+                        text: get_display(arabic_reshaper.reshape("نمایش گروه های کالایی"))
+                        font_name: "XB Niloofar.ttf"
+                        on_release: app.root.collapse()
 
-            Label:
-                size_hint_y: .1
+                    Label:
+                        size_hint_y: .15
     MDScreen:
         name: "two screen"
-
-        ScrollView:
-            size_hint_y: 0.94
-            always_overscroll: False
-            
-            scroll_timeout: 2500
-            scroll_distance: 2
-
-            #do_scroll_x: False
-            do_scroll_y: True
-            id: sc
-           
-            
-            #always_overscroll: False
-            effect_cls: "ScrollEffect"
-            #scroll_distance: "2000sp"
-            #scroll_timeout: 255
-            #smooth_scroll_end: 0
-
+        BoxLayout:
+            canvas.before:
+                Color:
+                    rgb: gch('#1A237E')
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            Label: 
+                size_hint_x: .01
             BoxLayout:
-                
-                orientation: 'horizontal'
-                size_hint_y: None
-                height: self.minimum_height
-                #spacing: "2dp"
-                BoxLayout:
-                    
-                    orientation: 'vertical'
-                    id: main
-                    markup: True
-                    size_hint_y: None
-                    height: self.minimum_height
-                    #spacing: "2dp"
-                BoxLayout:
-                    
-                    orientation: 'vertical'
-                    id: main2
-                    markup: True
-                    size_hint_y: None
-                    height: self.minimum_height
-                    #spacing: "2dp"
-                BoxLayout:
-                    
-                    orientation: 'vertical'
-                    id: main3
-                    markup: True
-                    size_hint_y: None
-                    height: self.minimum_height
-                    #spacing: "2dp"
+                size_hint_x: .99
+                canvas.before:
+                    Color:
+                        rgb: 1, 1, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [(50, 50), (0, 0), (0, 0), (0, 0)]
+                ScrollView:
+                    id: sc
+                    size_hint_y: .92
+                    always_overscroll: False
+                    #scroll_timeout: 300 # After (2500)2.5s you can click child 
+                    #scroll_distance: 2  # Delay of swip
+                    do_scroll_x: False
+                    do_scroll_y: True
+                    effect_cls: "ScrollEffect"
+                    #always_overscroll: False
+                    #scroll_distance: "2000sp"
+                    #scroll_timeout: 255
+                    #smooth_scroll_end: 0
 
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        size_hint_y: None
+                        height: self.minimum_height
+                        #spacing: "30dp"
 
+                        BoxLayout:
+                            orientation: 'vertical'
+                            id: main
+                            markup: True
+                            size_hint_y: None
+                            height: self.minimum_height
 
+                        BoxLayout:
+                            orientation: 'vertical'
+                            id: main2
+                            markup: True
+                            size_hint_y: None
+                            height: self.minimum_height
 
-#            GridLayout:
-#                id: main
-#                cols: 3
-#                size_hint_y: None
-#                height: self.minimum_height
-#                spacing: "2dp"
-
+                        BoxLayout:
+                            id: main3
+                            orientation: 'vertical'
+                            
+                            markup: True
+                            size_hint_y: None
+                            height: self.minimum_height
+                     
     MDScreen:
         name: "three screen"
-
         BoxLayout:
+            canvas.before:
+                Color:
+                    rgb: gch('#1A237E')
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            Label: 
+                size_hint_x: .01
+            BoxLayout:
+                size_hint_x: .99
+                canvas.before:
+                    Color:
+                        rgb: 1, 1, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [(50, 50), (0, 0), (0, 0), (0, 0)]
+                BoxLayout:
+                    size_hint_y: .92
+                    orientation: "vertical"
+                    spacing: "3dp"
+
+                    Image: 
+                        pos_hint: {"center_x": .5, "top": 0.75}
+                        source: "01.jpg"
+                    
+                    Label:
+                        size_hint_y: .05
+
+                    MDRoundFlatIconButton:
+                        pos_hint: {"center_x": .5, "top": 1}
+                        icon: "cart-plus"
+                        text: "Digikala_Panel"
+                        on_release: app.root.callback(self, "")
+
+                    MDRoundFlatIconButton:
+                        pos_hint: {"center_x": .5, "top": 1}
+                        icon: "instagram"
+                        text: "Instagram"
+                        on_release: app.root.callback(self, "")
+
+                    MDRoundFlatIconButton:
+                        pos_hint: {"center_x": .5, "top": 1}
+                        icon: "web"
+                        text: "Weblog"
+                        on_release: app.root.callback(self, "")
+                    
+                    Label:
+                        size_hint_y: .1
+
+    MDScreen:
+        name: "forth screen"
+        BoxLayout:
+            canvas.before:
+                Color:
+                    rgb: (1, 1, 1)
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
             orientation: "vertical"
-            spacing: "3dp"
             Label:
-                size_hint_y: .25
-            Image: 
-                pos_hint: {"center_x": .5, "top": 0.75}
-                source: "01.jpg"
-            
-            Label:
-                size_hint_y: .05
+                id: title_dt
+                halign: 'right'
+                pos_hint: {"right": 1, "center_y": .5}
+                size_hint: 1, 0.08
+                text: ""
+                color: (0, 0, 0)
+                font_name: "XB Niloofar.ttf"
+                font_size: 60
 
-            MDRoundFlatIconButton:
-                pos_hint: {"center_x": .5, "top": 1}
-                icon: "cart-plus"
-                text: "Digikala_Panel"
-                on_release: app.root.callback(self, "")
+            ScrollView:
+                id: sc_dt
+                size_hint_y: 0.75
+                #always_overscroll: False
+                scroll_timeout: 55 # After (2500)2.5s you can click child 
+                scroll_distance: 2  # Delay of swip
+                do_scroll_x: False
+                do_scroll_y: True
+                effect_cls: "ScrollEffect"
+                BoxLayout:
+                    id: image_dt
+                    orientation: 'vertical'
+                    markup: True
+                    size_hint_y: None
+                    height: self.minimum_height
 
-            MDRoundFlatIconButton:
-                pos_hint: {"center_x": .5, "top": 1}
-                icon: "instagram"
-                text: "Instagram"
-                on_release: app.root.callback(self, "")
+            BoxLayout:
+                orientation: "vertical"
+                size_hint_y: 0.17
+                BoxLayout:
+                    size_hint_y: .5
+                    pos_hint: {"center_y": .5}
+                    orientation: "vertical"
+                    padding: "80dp","5dp", "80dp", "0dp"
+                    #spacing: "10dp"
+                    BoxLayout:
+                        orientation: "vertical"
+                        pos_hint: {"center_x": .5}
+                        canvas.before: 
+                            Color: 
+                                rgb: (240/255, 240/255, 240/255) 
+                            RoundedRectangle:
+                                pos: self.pos
+                                size: self.size 
+                                radius: [(50, 50), (50, 50), (50, 50), (50, 50)]
+                        BoxLayout:
+                            orientation: "horizontal"
+                            Label:
+                                id: off_dt
+                                text: ""
+                                font_name: "XB Niloofar.ttf"
+                                font_size: 55
+                                pos_hint: {"center_x": .5}
+                                color: (1, 1, 1)
+                                canvas.before: 
+                                    Color: 
+                                        rgb: (1, 0, 0) 
+                                    RoundedRectangle:
+                                        pos: [self.x + self.width / 2 - self.texture_size[0] / 2 - 2.5, self.y + self.height / 2 - self.texture_size[1] / 2] 
+                                        size: [self.texture_size[0] + 5, self.texture_size[1]] if self.text != "" else [.05, .05]
+                                        
+                                        radius: [(5, 5), (5, 5), (5, 5), (5, 5)]                                
+                            
+                            Label:
+                                id: price1_dt
+                                text: ""
+                                font_name: "XB Niloofar.ttf"
+                                font_size: 50
+                                pos_hint: {"center_x": .5}
+                                color: (0, 0, 0)
+                                halign: "center"
+                                canvas: 
+                                    Color: 
+                                        rgb: (1, 0, 0) 
+                                    Line:
+                                        width: 1.5
+                                        points: (  self.x + 50, self.y, self.x + self.width - 50, self.y + self.height) if self.text != "" else (self.x, self.y)
+                            Label:
+                                text: get_display(arabic_reshaper.reshape("قیمت:"))      
+                                font_name: "XB Niloofar.ttf"
+                                font_size: 60
+                                pos_hint: {"center_x": .5}
+                                color: (0, 0, 0)
+                            
+                        Label:
+                            id: price2_dt
+                            text: ""
+                            font_name: "XB Niloofar.ttf"
+                            font_size: 60
+                            #markup: True
+                            color: (0, 0, 0)
 
-            MDRoundFlatIconButton:
-                pos_hint: {"center_x": .5, "top": 1}
-                icon: "web"
-                text: "Weblog"
-                on_release: app.root.callback(self, "")
-            
-            Label:
-                size_hint_y: .1
+                BoxLayout:
+                    orientation: "horizontal"
+                    size_hint_y: .5
+                    size_hint_x: 1
+                    padding: "10dp", "0dp", "10dp", "10dp"
+                    #spacing: "10dp"
+                    BoxLayout:
+                        orientation: "vertical"
+                        MDFillRoundFlatIconButton:
+                            pos_hint: {"x": 0}
+                            icon: "cart-plus"
+                            text: get_display(arabic_reshaper.reshape("خرید از دیجیکالا"))
+                            font_name: "XB Niloofar.ttf"
+                            on_press: 
+                                app.root.show_popup("")
+                            on_release: 
+                                app.root.Digikala_dt()
+                    BoxLayout:
+                        orientation: "vertical"
+                        MDFillRoundFlatButton:
+                            id: return_dt
+                            pos_hint: {"right": 1}
+                            text: ""
+                            font_name: "XB Niloofar.ttf"
+                            on_press: app.root.show_popup("")
+                            on_release: 
+                                app.root.callback(self, app.root.cat)
 
+    MDScreen:
+        name: "fifth screen"
+        BoxLayout:
+            canvas.before:
+                Color:
+                    rgb: gch('#1A237E')
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            BoxLayout:
+                size_hint_x: .99
+                canvas.before:
+                    Color:
+                        rgb: 1, 1, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [(50, 50), (0, 0), (0, 0), (0, 0)]
 
+                BoxLayout:
+                    orientation: "vertical"
+                    Label:
+                        size_hint_y: .05
+                    Image:
+                        source: "cat.jpg"
+                        size_hint_y: .5
+
+                    Label:
+                        pos_hint: {"center_x": .5, "top": 1}
+                        text: get_display(arabic_reshaper.reshape(" خطا در اتصال به اینترنت ..."))
+                        font_name: "XB Niloofar.ttf"
+                        color: (1, 0, 0)
+                        size_hint_y: .2
+
+                    MDFillRoundFlatButton:
+                        pos_hint: {"center_x": .5, "top": 1}
+                        text: get_display(arabic_reshaper.reshape("تلاش مجدد"))
+                        font_name: "XB Niloofar.ttf"
+                        on_press: app.root.show_popup("")
+                        on_release: app.root.__init__()
+                   
+                    Label:
+                        size_hint_y: .05
 
 <MyBackdropBackLayer>:
-    
     BoxLayout:
-
-        orientation:'vertical'
-
-        pos_hint: {"center_x" : 0.5}#, "top" : .8 }
-        spacing: "5dp"
-        #padding: "5dp"
-        Label:
-            size_hint_y: 0.08
-        MDFillRoundFlatButton:
-            #size_hint: (.5, .19)
-            pos_hint: {"center_x": .5}
-            text: get_display(arabic_reshaper.reshape("حوله و مایو"))
-            font_name: "DroidNaskh-Regular.ttf"
-            background_color: app.theme_cls.primary_color
-            on_press: app.root.show_popup()
-            on_release:
-                app.root.callback(self, "")
-                #app.root.mdBackdrop.open()
-                #app.root.mdBackdrop.close()
-
-        MDFillRoundFlatButton:
-            #size_hint: (1, .19)
-            pos_hint: {"center_x": .5}
-            text: get_display(arabic_reshaper.reshape("کلاه و نقاب"))
-            font_name: "DroidNaskh-Regular.ttf"
-            background_color: app.theme_cls.primary_color
-            on_press: app.root.show_popup()
-            on_release: 
-                app.root.callback(self, "")
-                #app.root.mdBackdrop.open()
-                #app.root.mdBackdrop.close()
-                
-
-        MDFillRoundFlatButton:
-            #size_hint: (1, .19)
-            pos_hint: {"center_x": .5}
-            text: get_display(arabic_reshaper.reshape("قمقمه و شیکر"))
-            font_name: "DroidNaskh-Regular.ttf"
-            background_color: app.theme_cls.primary_color
-            on_press: app.root.show_popup()
-            on_release: 
-                app.root.callback(self, "")
-                #app.root.mdBackdrop.open()
-                #app.root.mdBackdrop.close()
-
-        MDFillRoundFlatButton:
-            #size_hint: (1, .19)
-            pos_hint: {"center_x": .5}
-            text: get_display(arabic_reshaper.reshape("دستکش ها و لوازم بدنسازی"))
-            font_name: "DroidNaskh-Regular.ttf"
-            background_color: app.theme_cls.primary_color
-            on_press: app.root.show_popup()
-            on_release: 
-                app.root.callback(self, "")
-                #app.root.mdBackdrop.open()
-                #app.root.mdBackdrop.close()
-
-        Image: 
-            pos_hint: {"center_x": .5} 
-            size_hint: (None, None)
-            size: ("250dp", "250dp")
-            source: "022.png"
-
-        MDFillRoundFlatButton:
-            text: get_display(arabic_reshaper.reshape("ارتباط با ما"))
-            font_name: "DroidNaskh-Regular.ttf"
-            background_color: app.theme_cls.primary_color
-            pos_hint: {"center_x": .5}
-            on_release: 
-                #app.root.mdBackdrop.open()
-                #app.root.mdBackdrop.close()
-                app.root.mgr1.current= "three screen"
-                app.root.collapse()
-
+        canvas.before:
+            Color:
+                rgb: gch('#1A237E')
+            Rectangle:
+                pos: self.pos
+                size: self.size
         Label: 
-            size_hint_y: 0.08
+            size_hint_x: .01
+        BoxLayout:
+            size_hint_x: .99
+            canvas.before:
+                Color:
+                    rgb: 1, 1, 1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [(50, 50), (0, 0), (0, 0), (0, 0)]
+            BoxLayout:
+                size_hint_y: .92
+                orientation:'vertical'
+
+                pos_hint: {"center_x" : 0.5}#, "top" : .8 }
+                spacing: "5dp"
+                #padding: "5dp"
+                Label:
+                    size_hint_y: 0.08
+                MDFillRoundFlatButton:
+                    #size_hint: (.5, .19)
+                    pos_hint: {"center_x": .5}
+                    text: get_display(arabic_reshaper.reshape("حوله و مایو"))
+                    font_name: "XB Niloofar.ttf"
+                    background_color: app.theme_cls.primary_color
+                    on_press: app.root.show_popup("")
+                    on_release:
+                        app.root.callback(self, "")
+                        #app.root.mdBackdrop.open()
+                        #app.root.mdBackdrop.close()
+
+                MDFillRoundFlatButton:
+                    #size_hint: (1, .19)
+                    pos_hint: {"center_x": .5}
+                    text: get_display(arabic_reshaper.reshape("کلاه و نقاب"))
+                    font_name: "XB Niloofar.ttf"
+                    background_color: app.theme_cls.primary_color
+                    on_press: app.root.show_popup("")
+                    on_release: 
+                        app.root.callback(self, "")
+                        #app.root.mdBackdrop.open()
+                        #app.root.mdBackdrop.close()
+                        
+
+                MDFillRoundFlatButton:
+                    #size_hint: (1, .19)
+                    pos_hint: {"center_x": .5}
+                    text: get_display(arabic_reshaper.reshape("قمقمه و شیکر"))
+                    font_name: "XB Niloofar.ttf"
+                    background_color: app.theme_cls.primary_color
+                    on_press: app.root.show_popup("")
+                    on_release: 
+                        app.root.callback(self, "")
+                        #app.root.mdBackdrop.open()
+                        #app.root.mdBackdrop.close()
+
+                MDFillRoundFlatButton:
+                    #size_hint: (1, .19)
+                    pos_hint: {"center_x": .5}
+                    text: get_display(arabic_reshaper.reshape("دستکش ها و لوازم بدنسازی"))
+                    font_name: "XB Niloofar.ttf"
+                    background_color: app.theme_cls.primary_color
+                    on_press: app.root.show_popup("")
+                    on_release: 
+                        app.root.callback(self, "")
+                        #app.root.mdBackdrop.open()
+                        #app.root.mdBackdrop.close()
+
+                Image: 
+                    pos_hint: {"center_x": .5} 
+                    size_hint: (None, None)
+                    size: ("250dp", "250dp")
+                    source: "022.png"
+
+                MDFillRoundFlatButton:
+                    text: get_display(arabic_reshaper.reshape("ارتباط با ما"))
+                    font_name: "XB Niloofar.ttf"
+                    background_color: app.theme_cls.primary_color
+                    pos_hint: {"center_x": .5}
+                    on_release: 
+                        #app.root.mdBackdrop.open()
+                        #app.root.mdBackdrop.close()
+                        app.root.mgr1.current= "three screen"
+                        app.root.collapse()
+
+                Label: 
+                    size_hint_y: 0.08
 <PopupBox>:
     pop_up_text: _pop_up_text
     size_hint: .55, .15
     auto_dismiss: True
     title: ""
-    
     BoxLayout:
         orientation: "vertical"
         Label:
             id: _pop_up_text
             text: '' 
-            font_name: "DroidNaskh-Regular.ttf"
+            font_name: "XB Niloofar.ttf"
 

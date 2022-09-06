@@ -28,7 +28,7 @@ source.include_patterns = assets/*,images/*.png, font/*.ttf
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 0.4
+version = 0.7
 
 # (str) Application versioning (method 2)
 #version.regex = __version__ = ['"](.*)['"]
