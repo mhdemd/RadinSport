@@ -13,7 +13,7 @@ package.domain = com.RadinAfzar
 source.dir = .
 
 # (list) Source files to include (let empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas,ttf,jpg,png
+source.include_exts = py,png,jpg,kv,atlas,ttf,jpg,png,csv
 
 # (list) List of inclusions using pattern matching
 source.include_patterns = assets/*,images/*.png, font/*.ttf
@@ -28,7 +28,7 @@ source.include_patterns = assets/*,images/*.png, font/*.ttf
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 0.7
+version = 0.8
 
 # (str) Application versioning (method 2)
 #version.regex = __version__ = ['"](.*)['"]
@@ -36,7 +36,9 @@ version = 0.7
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = kivy_garden.mapview, openssl, requests, urllib3, chardet, certifi, idna, python3, kivy==2.0.0, kivymd, pygments, sdl2_ttf==2.0.15, pillow, OrderedDict, regex, BeautifulSoup4, arabic-reshaper, python-bidi, convert_numbers, mega.py 1.0.8
+requirements = python3==3.7.5, hostpython3==3.7.5, kivy_garden.mapview, openssl, requests, urllib3, chardet, certifi, idna, kivy==2.0.0rc4, kivymd==0.104.2, pygments, sdl2_ttf==2.0.15, pillow, OrderedDict, regex, BeautifulSoup4, arabic-reshaper, python-bidi, convert_numbers, mega.py 1.0.8, csv
+#, json, xlrd,xlsxwriter,openpyxl, et_xmlfile  
+#numpy, pandas==1.3.2, pandas-gbq
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes

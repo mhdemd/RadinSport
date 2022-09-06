@@ -80,7 +80,7 @@
     off_dt: off_dt
     sc_dt: sc_dt
     
-    MDScreen:
+    MDScreen: #نمایش گروه های کالایی
         name: "one screen"
         BoxLayout:
             canvas.before:
@@ -112,7 +112,7 @@
 
                     Label:
                         size_hint_y: .15
-    MDScreen:
+    MDScreen: #menu
         name: "two screen"
         BoxLayout:
             canvas.before:
@@ -174,7 +174,7 @@
                             size_hint_y: None
                             height: self.minimum_height
                      
-    MDScreen:
+    MDScreen: #abaot
         name: "three screen"
         BoxLayout:
             canvas.before:
@@ -227,7 +227,7 @@
                     Label:
                         size_hint_y: .1
 
-    MDScreen:
+    MDScreen: #detail
         name: "forth screen"
         BoxLayout:
             canvas.before:
@@ -246,10 +246,11 @@
                 color: (0, 0, 0)
                 font_name: "XB Niloofar.ttf"
                 font_size: 60
-
+            Label:
+                size_hint_y: 0.1
             ScrollView:
                 id: sc_dt
-                size_hint_y: 0.75
+                size_hint_y: 0.65
                 #always_overscroll: False
                 scroll_timeout: 55 # After (2500)2.5s you can click child 
                 scroll_distance: 2  # Delay of swip
@@ -313,9 +314,9 @@
                                         rgb: (1, 0, 0) 
                                     Line:
                                         width: 1.5
-                                        points: (  self.x + 50, self.y, self.x + self.width - 50, self.y + self.height) if self.text != "" else (self.x, self.y)
+                                        points: (  self.x + 50, self.y, self.x + self.width - 50, self.y + self.height) if self.text != '' else (self.x, self.y)
                             Label:
-                                text: get_display(arabic_reshaper.reshape("قیمت:"))      
+                                text: get_display(arabic_reshaper.reshape('قیمت:'))      
                                 font_name: "XB Niloofar.ttf"
                                 font_size: 60
                                 pos_hint: {"center_x": .5}
@@ -427,12 +428,12 @@
                 pos_hint: {"center_x" : 0.5}#, "top" : .8 }
                 spacing: "5dp"
                 #padding: "5dp"
-                Label:
-                    size_hint_y: 0.08
+                #Label:
+                #    size_hint_y: 0.08
                 MDFillRoundFlatButton:
-                    #size_hint: (.5, .19)
+                    size_hint_y: 0.1
                     pos_hint: {"center_x": .5}
-                    text: get_display(arabic_reshaper.reshape("حوله و مایو"))
+                    text: get_display(arabic_reshaper.reshape("طناب"))
                     font_name: "XB Niloofar.ttf"
                     background_color: app.theme_cls.primary_color
                     on_press: app.root.show_popup("")
@@ -442,9 +443,9 @@
                         #app.root.mdBackdrop.close()
 
                 MDFillRoundFlatButton:
-                    #size_hint: (1, .19)
+                    size_hint_y: 0.1
                     pos_hint: {"center_x": .5}
-                    text: get_display(arabic_reshaper.reshape("کلاه و نقاب"))
+                    text: get_display(arabic_reshaper.reshape("دستکش"))
                     font_name: "XB Niloofar.ttf"
                     background_color: app.theme_cls.primary_color
                     on_press: app.root.show_popup("")
@@ -455,7 +456,31 @@
                         
 
                 MDFillRoundFlatButton:
-                    #size_hint: (1, .19)
+                    size_hint_y: 0.1
+                    pos_hint: {"center_x": .5}
+                    text: get_display(arabic_reshaper.reshape("لوازم شنا"))
+                    font_name: "XB Niloofar.ttf"
+                    background_color: app.theme_cls.primary_color
+                    on_press: app.root.show_popup("")
+                    on_release: 
+                        app.root.callback(self, "")
+                        #app.root.mdBackdrop.open()
+                        #app.root.mdBackdrop.close()
+
+                MDFillRoundFlatButton:
+                    size_hint_y: 0.1
+                    pos_hint: {"center_x": .5}
+                    text: get_display(arabic_reshaper.reshape("کلاه و نقاب"))
+                    font_name: "XB Niloofar.ttf"
+                    background_color: app.theme_cls.primary_color
+                    on_press: app.root.show_popup("")
+                    on_release: 
+                        app.root.callback(self, "")
+                        #app.root.mdBackdrop.open()
+                        #app.root.mdBackdrop.close()
+
+                MDFillRoundFlatButton:
+                    size_hint_y: 0.1
                     pos_hint: {"center_x": .5}
                     text: get_display(arabic_reshaper.reshape("قمقمه و شیکر"))
                     font_name: "XB Niloofar.ttf"
@@ -467,9 +492,9 @@
                         #app.root.mdBackdrop.close()
 
                 MDFillRoundFlatButton:
-                    #size_hint: (1, .19)
+                    size_hint_y: 0.1
                     pos_hint: {"center_x": .5}
-                    text: get_display(arabic_reshaper.reshape("دستکش ها و لوازم بدنسازی"))
+                    text: get_display(arabic_reshaper.reshape("بدنسازی و ایروبیک"))
                     font_name: "XB Niloofar.ttf"
                     background_color: app.theme_cls.primary_color
                     on_press: app.root.show_popup("")
@@ -477,14 +502,16 @@
                         app.root.callback(self, "")
                         #app.root.mdBackdrop.open()
                         #app.root.mdBackdrop.close()
-
+                Label: 
+                    size_hint_y: 0.1
                 Image: 
                     pos_hint: {"center_x": .5} 
                     size_hint: (None, None)
-                    size: ("250dp", "250dp")
+                    size: ("270dp", "270dp")
                     source: "022.png"
 
                 MDFillRoundFlatButton:
+                    size_hint_y: 0.1
                     text: get_display(arabic_reshaper.reshape("ارتباط با ما"))
                     font_name: "XB Niloofar.ttf"
                     background_color: app.theme_cls.primary_color
@@ -496,7 +523,7 @@
                         app.root.collapse()
 
                 Label: 
-                    size_hint_y: 0.08
+                    size_hint_y: 0.02
 <PopupBox>:
     pop_up_text: _pop_up_text
     size_hint: .55, .15
